@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Week 02 Example 01</title>
+  </head>
+  <body>
+    <script>
+      //Your javascript goes here
+
+      /*
+            anythig here
+            is a multi line
+            comment
+            */
+
+      //Variables
+      var name = "Mike";
+      var age = 24;
+      var isRetired = age >= 65;
+
+      //lets print somenthing to the console, or use alert if you like
+      console.log("name", name);
+
+      //javascript are weakly-typed , they can assinged to another type, but NOT recomended
+      var x = 33;
+      x = "33";
+      x = 33.75;
+
+      console.log("x", x);
+
+      //familiar operators
+      var myAge = 65;
+      var inTenYears = myAge + 10;
+      console.log("inTenYears", inTenYears);
+      var inTenYears2 = (myAge += 10);
+      console.log("inTenYears2", inTenYears2);
+
+      var aNumber = 1;
+      //preassignment
+      console.log("aNumber", aNumber);
+      console.log("preassignment", ++aNumber);
+      console.log("aNumber", aNumber);
+      console.log("posassignment", aNumber++);
+      console.log("aNumber", aNumber);
+
+      var userName = "Student 1";
+      alert("Thanks, " + userName + " !");
+
+      function sayHi() {
+        alert("Hi...!");
+      }
+
+      sayHi();
+    </script>
+  </body>
+</html>
