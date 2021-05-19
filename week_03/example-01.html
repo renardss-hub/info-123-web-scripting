@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Week 03 Example 01</title>
+    <style>
+      .mainContainer {
+        border: 3px outset blue;
+        background-color: lightgrey;
+        text-align: left;
+        margin: 15px;
+        padding: 20px;
+        max-width: 300px;
+      }
+      .secondaryContainer {
+        border: 3px outset black;
+        background-color: whitesmoke;
+        text-align: left;
+        padding: 20px;
+        max-width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="divEvent"
+      class="mainContainer"
+      onmouseover="jsFnMouseOver()"
+      onmouseout="jsFnMouseOut(this)"
+    >
+      <h4>Event handler example div 01</h4>
+    </div>
+
+    <div class="mainContainer">
+      <h4>Array example</h4>
+      <p>Current elements in the array:</p>
+      <div id="divArrayData" class="secondaryContainer"></div>
+      <p>Add new element to array:</p>
+      <input type="text" id="tbNewElement" />
+      <br />
+      <input
+        style="margin-top: 15px"
+        type="button"
+        id="btnAddNewElement"
+        value="Add Element"
+        onclick="jsFnAddElement()"
+      />
+    </div>
+
+    <script>
+      //callback function using div id
+      function jsFnMouseOver() {
+        //Get my html element
+        var htmlCtrl = document.getElementById("divEvent");
+        htmlCtrl.style.backgroundColor = "yellow";
+      }
+      //callback function using this
+      function jsFnMouseOut(ctrl) {
+        //console.log(ctrl);
+        ctrl.style.backgroundColor = "lightgrey";
+      }
+
+      //Create an empty global array
+      var myGlobalNumericArray = [];
+      //Create a function to add element to array and display on div
+      function jsFnAddElement() {
+        //Get the value to add
+        var newValue = document.getElementById("tbNewElement").value;
+        //Lets do some validation
+        //Make sure is not empty or that we always have a number
+        if (isNaN(newValue) || isNaN(parseInt(newValue))) {
+          alert("Only integer values accepted!");
+          return;
+        }
+        //add new value to my global array
+        myGlobalNumericArray.push(newValue);
+
+        var myTotalAddition = 0;
+        var myNumericString = "";
+        //iterate my global array and build my string to render on my div.
+        for (var index = 0; index < myGlobalNumericArray.length; index++) {
+          myNumericString += myGlobalNumericArray[index] + ", ";
+          myTotalAddition += parseInt(myGlobalNumericArray[index]);
+        }
+
+        //render my global array elements into my div container
+        var outputDiv = document.getElementById("divArrayData");
+        outputDiv.innerHTML = "Numbers: [ ";
+        outputDiv.innerHTML += myNumericString;
+        outputDiv.innerHTML += " ]";
+        outputDiv.innerHTML += "<br/>";
+
+        //Include addition of number inside the array as Total (Addition)
+        outputDiv.innerHTML += "<b>Total (Addition): </b>";
+        outputDiv.innerHTML += myTotalAddition;
+        outputDiv.innerHTML += "<br/>";
+      }
+    </script>
+  </body>
+</html>
