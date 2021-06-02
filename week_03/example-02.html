@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Week 03 Example 02</title>
+    <style>
+      .mainContainer {
+        border: 3px outset blue;
+        background-color: lightgrey;
+        text-align: left;
+        margin: 15px;
+        padding: 20px;
+        max-width: 500px;
+      }
+      .secondaryContainer {
+        border: 3px outset black;
+        background-color: whitesmoke;
+        text-align: left;
+        padding: 20px;
+        max-width: 500px;
+      }
+      input[type="text"] {
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="divMain" class="mainContainer">
+      <h4>JS Objects Example</h4>
+      <div id="divSecondary" class="secondaryContainer">
+        <label>Model: </label>
+        <input id="tbModel" type="text" />
+        <br />
+
+        <label>Colour: </label>
+        <input id="tbColour" type="text" />
+        <br />
+
+        <label>Year: </label>
+        <input id="tbYear" type="text" />
+        <br />
+
+        <label style="margin-top: 15px">Photo:</label>
+        <br />
+        <img
+          style="margin-top: 15px"
+          id="imgPhoto"
+          width="400px"
+          height="400px"
+        />
+      </div>
+      <div style="margin-top: 20px; text-align: center">
+        <input type="button" value="Previous" onclick="previous()" />
+        <input
+          style="margin-left: 35px"
+          type="button"
+          value="Next"
+          onclick="next()"
+        />
+      </div>
+    </div>
+
+    <script>
+      //Global variable(s)
+      var myCarArray = [];
+      var myGlobalIndex = 0;
+
+      //Create an object
+      var objCar = new Object();
+      objCar.model = "Sedan";
+      objCar.colour = "red";
+      objCar.numberOfPassengers = 4;
+      objCar.year = 2020;
+      objCar.imageSrc = "./assets/images/Car.jpg";
+
+      //Add my objCar to my array
+      myCarArray.push(objCar);
+
+      //console.log("my car object", objCar);
+
+      //console.log("my  car array", myCarArray);
+
+      //Create a second object and add it to our array
+      var objCar2 = new Object();
+      objCar2.model = "Hatchback";
+      objCar2.colour = "blue";
+      objCar2.numberOfPassengers = 2;
+      objCar2.year = 2021;
+      objCar2.imageSrc = "./assets/images/Porsche.jpg";
+
+      myCarArray.push(objCar2);
+
+      //console.log("my array", myCarArray);
+
+      function setData(inputObject) {
+        //Get html elements
+        var model = document.getElementById("tbModel");
+        var colour = document.getElementById("tbColour");
+        var year = document.getElementById("tbYear");
+        var imgPhoto = document.getElementById("imgPhoto");
+        //Set the value with inputObject (input parameter)
+        //TODO: ADD VALIDATION. i.e. make sure properties are set or not empty
+        model.value = inputObject.model;
+        colour.value = inputObject.colour;
+        year.value = inputObject.year;
+        imgPhoto.src = inputObject.imageSrc;
+      }
+
+      setData(myCarArray[myGlobalIndex]);
+
+      function previous() {
+        myGlobalIndex--;
+        setData(myCarArray[myGlobalIndex]);
+      }
+
+      function next() {
+        myGlobalIndex++;
+        setData(myCarArray[myGlobalIndex]);
+      }
+    </script>
+  </body>
+</html>
