@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AJAX call start point template</title>
+  </head>
+  <body>
+    <script>
+      const ISFINISHED = 4;
+      const ISOK = 200;
+
+      //synchronous AJAX call
+      function getJSONSync(url) {
+        var response = "";
+        var xmlHttp = new XMLHttpRequest();
+
+        //check if your borwser supports this feature
+        if (xmlHttp !== null) {
+          //open the connection for a GET request
+          xmlHttp.open("GET", url, false);
+          //send get request
+          xmlHttp.send(null);
+          //...wait for the reponse
+          response = xmlHttp.responseText;
+        }
+
+        return response;
+      }
+
+      //asynchornous call
+      function getJSONAsync(url, callback) {
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+          if (request.readyState === ISFINISHED && request.status === ISOK) {
+            callback(this);
+          }
+        };
+        request.open("GET", url);
+        request.send();
+      }
+    </script>
+  </body>
+</html>

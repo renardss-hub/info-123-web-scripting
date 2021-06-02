@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Week 05 - Practice 01</title>
+  </head>
+  <body>
+    <div>Number of tosses:</div>
+    <input type="text" id="tbNumberOfTosses" />
+    <br /><br /><br />
+    <input
+      type="button"
+      id="btnToss"
+      onclick="fnToss()"
+      value="Start Tossing"
+    />
+    <script>
+      //JavaScript here
+      function fnToss() {
+        console.log("fnToss works!");
+        //Create toss array variable
+        var tossArray = [];
+        //Get number of tosses from textbox
+        var numberOfTosses = document.getElementById("tbNumberOfTosses").value;
+
+        //check if you are reading data from textbox
+        //console.log(numberOfTosses);
+
+        //TODO: validate that numberOfTosses is an integer
+        for (var i = 0; i < numberOfTosses; i++) {
+          var x = Math.floor(Math.random() * 2);
+          //console.log("current index: " + i, x);
+          tossArray.push(x);
+        }
+
+        //Count number of heads and tails
+        var heads = 0;
+        var tails = 0;
+        for (var j = 0; j < tossArray.length; j++) {
+          //validate if 0 or 1 and increase head/tail counters accordingly
+          if (tossArray[j] == 0) {
+            heads++;
+          } else {
+            tails++;
+          }
+        }
+
+        //console.log("heads count", heads);
+        //console.log("tails cound", tails);
+
+        var message = "Number of heads=" + heads + "\nnumber of tails=" + tails;
+        alert(message);
+      }
+    </script>
+  </body>
+</html>
