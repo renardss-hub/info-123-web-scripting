@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AJAX week 05 example 01</title>
+  </head>
+  <body>
+    <div>
+      <img id="myImage" />
+    </div>
+
+    <script>
+      //====================================
+      //Your code here
+
+      var url = "https://dog.ceo/api/breeds/image/random";
+
+      function testSyncAJAXCall() {
+        //get JSON string from url/api
+        var jsonString = getJSONSync(url);
+        console.log(jsonString);
+        var jsObjectFromJSONString = JSON.parse(jsonString);
+        console.log(jsObjectFromJSONString.message);
+        var imgHtmlCtrl = document.getElementById("myImage");
+        imgHtmlCtrl.src = jsObjectFromJSONString.message;
+      }
+
+      testSyncAJAXCall();
+
+      //====================================
+
+      const ISFINISHED = 4;
+      const ISOK = 200;
+
+      //synchronous AJAX call
+      function getJSONSync(url) {
+        var response = "";
+        var xmlHttp = new XMLHttpRequest();
+
+        //check if your borwser supports this feature
+        if (xmlHttp !== null) {
+          //open the connection for a GET request
+          xmlHttp.open("GET", url, false);
+          //send get request
+          xmlHttp.send(null);
+          //...wait for the reponse
+          response = xmlHttp.responseText;
+        }
+
+        return response;
+      }
+
+      //asynchornous call
+      function getJSONAsync(url, callback) {
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+          if (request.readyState === ISFINISHED && request.status === ISOK) {
+            callback(this);
+          }
+        };
+        request.open("GET", url);
+        request.send();
+      }
+    </script>
+  </body>
+</html>
