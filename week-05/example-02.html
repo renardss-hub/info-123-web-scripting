@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AJAX call week 05 example 02</title>
+  </head>
+  <body>
+    <textarea id="taAPIOutput" cols="200" rows="50"></textarea>
+
+    <div id="divResults"></div>
+
+    <script src="secret.js"></script>
+    <script>
+      const ISFINISHED = 4;
+      const ISOK = 200;
+
+      //synchronous AJAX call
+      function getJSONSync(url) {
+        var response = "";
+        var xmlHttp = new XMLHttpRequest();
+
+        //check if your borwser supports this feature
+        if (xmlHttp !== null) {
+          //open the connection for a GET request
+          xmlHttp.open("GET", url, false);
+          //send get request
+          xmlHttp.send(null);
+          //...wait for the reponse
+          response = xmlHttp.responseText;
+        }
+
+        return response;
+      }
+
+      //asynchornous call
+      function getJSONAsync(url, callback) {
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+          if (request.readyState === ISFINISHED && request.status === ISOK) {
+            callback(this);
+          }
+        };
+        request.open("GET", url);
+        request.send();
+      }
+
+      //NOT: YOUR CODE HERE
+      var my_api_url =
+        "https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?api-key=" +
+        NY_API_KEY;
+
+      function handleAPIResponse(response) {
+        //For now use the response.responseText and render it on  your textarea
+        var textArea = document.getElementById("taAPIOutput");
+        textArea.value = response.responseText;
+
+        var divResults = document.getElementById("divResults");
+
+        var html = "";
+
+        //TODO: PARSE JSON RESPNOSE AND BUILD YOUR HTML CONTROLS
+
+        //parse json string as a JS object
+        var jsObject = JSON.parse(response.responseText);
+
+        //optional use num_results
+        for (var i = 0; i < jsObject.results.length; i++) {
+          //create an html element to render title information
+          html += "<p>Title: <b>" + jsObject.results[i].title + "</b></p>";
+          //render published date
+          html +=
+            "<p>Published Date: <b>" +
+            jsObject.results[i].published_date +
+            "</b></p>";
+          //we may or may not have media information, validate if media information is present and render accordingly
+          if (jsObject.results[i].media.length > 0) {
+            //render copyright information
+            //html += "<p>Copyright: "+jsObject.results[i].media[0].copyright+"</p>";
+            //OPTIONAL just FYI: another option instead of concatenation strings
+            html += `<p>Copyright: ${jsObject.results[i].media[0].copyright}</p>`;
+            //render image html element
+            html +=
+              "<img src='" +
+              jsObject.results[i].media[0]["media-metadata"][0].url +
+              "'>";
+          } else {
+            html +=
+              "<p><b>NOTE:</b> There was no media information avaialable for this news.</p>";
+          }
+
+          html += "<hr/>";
+        }
+
+        //render dynamic html on the screen
+        divResults.innerHTML = html;
+      }
+
+      //Make my async ajax call to the NYT API
+      getJSONAsync(my_api_url, handleAPIResponse);
+    </script>
+  </body>
+</html>
