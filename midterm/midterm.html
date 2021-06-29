@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Midterm</title>
+</head>
+
+<body>
+
+    <div id="myOutput"></div>
+
+    <script src="secret.js"></script>
+    <script>
+        const ISFINISHED = 4;
+        const ISOK = 200;
+
+        //synchronous AJAX call
+        function getJSONSync(url) {
+            var response = "";
+            var xmlHttp = new XMLHttpRequest();
+
+            //check if your borwser supports this feature
+            if (xmlHttp !== null) {
+                //open the connection for a GET request
+                xmlHttp.open("GET", url, false);
+                //send get request
+                xmlHttp.send(null);
+                //...wait for the reponse
+                response = xmlHttp.responseText;
+            }
+
+            return response;
+        }
+
+        // //asynchornous call
+        // function getJSONAsync(url, callback) {
+        //     var request = new XMLHttpRequest();
+        //     request.onreadystatechange = function () {
+        //         if (request.readyState === ISFINISHED && request.status === ISOK) {
+        //             callback(this);
+        //         }
+        //     };
+        //     request.open("GET", url);
+        //     request.send();
+        // }
+
+        var myArray = [];
+
+        //https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=godfather&api-key=yourkey
+        var myObject1 = {
+            base_url: 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?',
+            query: 'query=blue',
+            api_key: '&api-key=' + NY_API_KEY,
+        };
+        var myObject2 = {
+            base_url: 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?',
+            query: 'query=green',
+            api_key: '&api-key=' + NY_API_KEY,
+        };
+        var myObject3 = {
+            base_url: 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?',
+            query: 'query=pink',
+            api_key: '&api-key=' + NY_API_KEY,
+        };
+        var myObject4 = {
+            base_url: 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?',
+            query: 'query=orange',
+            api_key: '&api-key=' + NY_API_KEY,
+        };
+        var myObject5 = {
+            base_url: 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?',
+            query: 'query=red',
+            api_key: '&api-key=' + NY_API_KEY,
+        };
+
+        myArray.push(myObject1);
+        myArray.push(myObject2);
+        myArray.push(myObject3);
+        myArray.push(myObject4);
+        myArray.push(myObject5);
+
+        //iterate array and make an ajax call
+        for (var i = 0; i < myArray.length; i++) {
+            //make a single ajax call per object and store response on JS variable
+            //var jsonString = getJSONSync(url);
+            var url = myArray[i].base_url + myArray[i].query + myArray[i].api_key;
+            //var jsonRespnose = JSON.parse(getJSONSync(url));
+            var jsonString = getJSONSync(url);
+            var jsObjecFromJson = JSON.parse(jsonString);
+
+            var myHtml = "<div>";
+            for (var j = 0; j < jsObjecFromJson.results.length; j++) {
+                //Here i have access to response data
+                //adding title paragraph
+                myHtml += "<p><b>Title: </b>" + jsObjecFromJson.results[j].display_title + "</p>";
+                myHtml += "<p><b>Summary: </b>" + jsObjecFromJson.results[j].summary_short + "</p>";
+                //Validate if multimedia property is null or not
+
+                if (jsObjecFromJson.results[j].multimedia != null) {
+                    myHtml += "<img src='" + jsObjecFromJson.results[j].multimedia.src + "' />";
+                }
+                else {
+                    myHtml += "<p>SORRY NO IMAGE AVAILABLE FOR THIS RESULT.</p>";
+                }
+
+
+            }
+            myHtml += "</div>";
+
+            document.write(myHtml);
+
+            //var jsonRespnose = getJSONSync(myArray[i].base_url + myArray[i].query + myArray[i].api_key);
+        }
+
+    </script>
+</body>
+
+</html>
