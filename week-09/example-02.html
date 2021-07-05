@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JS Map Object Example</title>
+  </head>
+  <body>
+    <label>Enter student first name:</label>
+    <br />
+    <input type="text" id="tbName" />
+    <br /><br />
+    <input type="button" id="btnSearch" value="Search Student in Map" />
+    <br /><br />
+    <input type="button" id="btnDelete" value="Delete Student" />
+    <br /><br />
+    <input
+      type="button"
+      id="btnViewStudents"
+      value="View Students In Console"
+    />
+    <script>
+      let studentObj = new Map();
+      //load some data into your map
+      studentObj.set("Mike", {
+        number: "0001",
+        course_name: "Course 01",
+        current_grade: "A+",
+      });
+      studentObj.set("Amy", {
+        number: "0002",
+        course_name: "Course 02",
+        current_grade: "A",
+      });
+      studentObj.set("Cristine", {
+        number: "0003",
+        course_name: "Course 03",
+        current_grade: "D",
+      });
+      studentObj.set("Rob", {
+        number: "0004",
+        course_name: "Course 04",
+        current_grade: "F",
+      });
+
+      //console.log(studentObj);
+
+      const searchStudent = () => {
+        studentName = document.getElementById("tbName").value;
+        if (studentObj.has(studentName)) {
+          console.log("Student found", studentObj.get(studentName));
+        } else {
+          console.log(`Student with name ${studentName} not found!`);
+        }
+      };
+
+      //delete student from map
+      const deleteStudent = () => {
+        studentName = document.getElementById("tbName").value;
+        if (studentObj.has(studentName)) {
+          studentObj.delete(studentName);
+          console.log(`Student: ${studentName} has been deleted!`);
+        } else {
+          console.log(
+            `Student with name ${studentName} not found, unable to delete!`
+          );
+        }
+      };
+
+      const listStudents = () => {
+        console.log(studentObj);
+      };
+
+      document
+        .getElementById("btnSearch")
+        .addEventListener("click", searchStudent);
+
+      document
+        .getElementById("btnDelete")
+        .addEventListener("click", deleteStudent);
+
+      document
+        .getElementById("btnViewStudents")
+        .addEventListener("click", listStudents);
+    </script>
+  </body>
+</html>

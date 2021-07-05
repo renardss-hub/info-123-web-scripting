@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JS Set Object Example</title>
+  </head>
+  <body>
+    <h3>Play Lottery</h3>
+    <label>Enter 5 numbers separated by comma (','):</label>
+    <br />
+    <textarea id="selectedNumbers" style="width: 300px" rows="5"></textarea>
+    <br /><br />
+    <input type="button" id="btnPlay" value="Click here to play" />
+    <br />
+    <br />
+    <input
+      type="button"
+      id="btnCheck"
+      value="Click here to check if your number won"
+    />
+
+    <script>
+      //Create our first 'set' object
+      let randomSetOfNumbers = new Set();
+      let yourSetOfWinningNumbers = new Set();
+
+      function myFunctionName() {
+        //here is my logic
+        console.log("this is a funcion as we know them... !");
+      }
+
+      //Create an arrow function to be called on btnPlay onclick event.
+      const generateRandomNumber = () => {
+        //select a minum of 10 random numbers
+        while (randomSetOfNumbers.size < 10) {
+          //generate 10 random numbers
+          let randomNumber = Math.floor(Math.random() * 21);
+          randomSetOfNumbers.add(randomNumber);
+        }
+        console.log(randomSetOfNumbers);
+      };
+
+      const checkNumbers = () => {
+        //get user selected numbers
+        let userNumbers = document.getElementById("selectedNumbers").value;
+        //userNumbers are basically a string of numbers separated by comma
+        //we need to process them and convert them to the right/expected format
+        //1. start by splitting the string
+        userNumbers = userNumbers.split(",");
+        //2. validate if array is not empty
+        if (userNumbers.length <= 0 || userNumbers[0].length <= 0) {
+          alert("selected numbers can not be empty!");
+          return;
+        }
+        //3. iterate user numbers
+        for (let i = 0; i < userNumbers.length; i++) {
+          //and compare selected numbers vs random numbers
+          if (randomSetOfNumbers.has(parseInt(userNumbers[i]))) {
+            //store winning number on another Set object.
+            yourSetOfWinningNumbers.add(userNumbers[i]);
+          }
+        }
+        //tell the user how many numbers were a match
+        if (yourSetOfWinningNumbers.size > 0) {
+          console.log("matched numbers", yourSetOfWinningNumbers);
+        } else {
+          console.log("sorry no luck this time!");
+        }
+        console.log(userNumbers);
+      };
+
+      //link generateRandomNumber logic with onclick event of button 'btnPlay'
+      document
+        .getElementById("btnPlay")
+        .addEventListener("click", generateRandomNumber);
+
+      document
+        .getElementById("btnCheck")
+        .addEventListener("click", checkNumbers);
+    </script>
+  </body>
+</html>

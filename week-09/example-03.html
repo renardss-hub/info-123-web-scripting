@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ES6 Class Example</title>
+  </head>
+  <body>
+    <script>
+      class Animal {
+        //add a constructor
+        constructor(name) {
+          this.name = name;
+        }
+        walk() {
+          return "I am walking now!";
+        }
+        speak() {
+          return "I am speaking now!";
+        }
+      }
+
+      class Duck extends Animal {
+        constructor(name) {
+          super(name);
+        }
+        speak() {
+          return `${this.name} says cuack!`;
+        }
+        run() {
+          return "i am running!";
+        }
+      }
+
+      //Creat an animal object based on animal class
+      //let obj1 = new Animal();
+      //console.log(obj1.walk());
+
+      let obj2 = new Duck("Ducky");
+      console.log(obj2.speak());
+      console.log(obj2.walk());
+      console.log(obj2.run());
+    </script>
+  </body>
+</html>
