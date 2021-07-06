@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scoping review</title>
+  </head>
+  <body>
+    <script>
+      //Your javascript here
+
+      function testValue(inputParameter) {
+        //in order to test the behiviour of "var"
+        if (inputParameter) {
+          var myValue = "set my value to somenthing";
+          console.log(myValue);
+        } else {
+          //myValue exists here with a vlue of undefined
+          console.log(myValue);
+          return null;
+        }
+
+        //myValue existys with value of undefined
+        console.log(myValue);
+      }
+
+      //FYI: hoisting
+      //This is how JS rewrites our testValue behind the scenes
+      function testValue2(inputParameter) {
+        //here is the main difference
+        var myValue;
+        if (inputParameter) {
+          myValue = "set my value to somenthing";
+          console.log(myValue);
+        } else {
+          console.log(myValue);
+        }
+        console.log(myValue);
+      }
+
+      testValue(true);
+
+      //Lets see the benefits of using "let" instead
+      function testValue3(inputParameter) {
+        if (inputParameter) {
+          let myValue = "blue";
+          return myValue;
+        }
+        //else {
+        //   console.log(myValue);
+        // }
+      }
+
+      testValue3(true);
+      //testValue3(false);
+
+      var test = "a";
+      console.log("test", test);
+      var test = "b";
+      console.log("updated test", test);
+      //this will throw an error
+      //let test = "c";
+      //console.log("updated test", test);
+
+      //Arrow functions
+      let getName = () => "Mike";
+
+      console.log("getName: ", getName);
+      console.log("getName: ", getName());
+
+      let sum = (num1, num2) => {
+        var result = num1 + num2;
+        return result;
+      };
+      //call function with input parameters and print the result
+      console.log("sum arrow function: ", sum(2, 8));
+    </script>
+  </body>
+</html>

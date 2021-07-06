@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Classes in JS6</title>
+  </head>
+  <body>
+    <script>
+      //Your JS here
+
+      //Create a base class
+      class Book {
+        //define the constructor function for Book
+        constructor(title, author, pubdate) {
+          this.title = title;
+          this.author = author;
+          this.pubdate = pubdate;
+        }
+        //create a method using ES6 syntax
+        bookName() {
+          //return the book name using Book properties information
+          //return this.author + " published " + this.title + " in " + this.pubdate;
+          return `${this.author} published ${this.title} in ${this.pubdate}`;
+        }
+      }
+
+      //Create a child class
+      class TypedBook extends Book {
+        //define the constructor function for TypedBook
+        constructor(title, author, pubdate, type) {
+          //call parent contructor with respective input parameters
+          super(title, author, pubdate);
+          this._type = type;
+        }
+        //override bookName method
+        bookName() {
+          return super.bookName() + " - category: " + this._type;
+        }
+
+        get type() {
+          return this._type;
+        }
+
+        set type(newType) {
+          if (newType) {
+            this._type = newType;
+          }
+        }
+      }
+
+      //Create a TypedBook object
+      let bookA = new TypedBook(
+        "Thank you for being late",
+        "Thomas Friedman",
+        2016,
+        "politics"
+      );
+      //start by getting the book name
+      console.log("book name: ", bookA.bookName());
+      //let's try the getter
+      console.log("type: ", bookA.type);
+      bookA.type = "art";
+      console.log("type: ", bookA.type);
+
+      //Create an object using the base class.
+      var bookB = new Book(
+        "The greates show on earth",
+        "Richard Dawkins",
+        2009
+      );
+      //print the book name into the console
+      console.log("book name: ", bookB.bookName());
+      console.log("book type: ", bookB.type);
+    </script>
+  </body>
+</html>
