@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>More ES6 classes</title>
+  </head>
+  <body>
+    <script>
+      console.log("initial message", "hello, my javascript is working fine!");
+      //Base class, basic functionality
+      class Car {
+        #model = 1900;
+        #passengers = 1;
+        #colour = "";
+        #speed = 1;
+        constructor(model, passengers, colour, speed) {
+          this.#model = model;
+          this.#passengers = passengers;
+          this.#colour = colour;
+          this.#speed = speed;
+        }
+        getModel() {
+          return this.#model;
+        }
+        setModel(model) {
+          this.#model = model;
+        }
+        getPassengers() {
+          return this.#passengers;
+        }
+        setPassengers(passengers) {
+          this.#passengers = passengers;
+        }
+        getColour() {
+          return this.#colour;
+        }
+        setColour(colour) {
+          this.#colour = colour;
+        }
+        getSpeed() {
+          return this.#speed;
+        }
+        accelerate() {
+          this.#speed++;
+        }
+        getBasicInformation() {
+          //return Model: + this.#model....
+          //For testing purposes we are calling methods and private methods as we have access to both from base class
+          return `Model: ${this.getModel()} No. Passengers: ${this.getPassengers()} Colour: ${
+            this.#colour
+          } Max Speed: ${this.#speed}`;
+        }
+      }
+
+      //create an object based on Car class
+      var obj1 = new Car(2020, 4, "gray", 100);
+      console.log(obj1);
+      console.log(obj1.getModel());
+      obj1.setModel(2021);
+      console.log("updated model value:", obj1.getModel());
+      //Print all basic information from object
+      console.log(obj1.getBasicInformation());
+
+      //Play with speed
+      console.log("current speed: ", obj1.getSpeed());
+      obj1.accelerate();
+      console.log("speed after acceleration: ", obj1.getSpeed());
+
+      //Extend functionality from our base class into sub classes or children
+      class BMW extends Car {
+        constructor(model, passengers, colour, speed) {
+          super(model, passengers, colour, speed);
+        }
+        accelerate() {
+          var i = 0;
+          while (i < 5) {
+            i++;
+            super.accelerate();
+          }
+        }
+      }
+
+      //Let's test our child class
+      var child1 = new BMW(1990, 2, "blue", 160);
+      console.log(child1);
+      console.log("bmw model:", child1.getModel());
+      //Print all basic information from object
+      console.log(child1.getBasicInformation());
+
+      //Play with speed
+      console.log("current speed: ", child1.getSpeed());
+      child1.accelerate();
+      console.log("speed after acceleration: ", child1.getSpeed());
+
+      class Ferrari extends Car {
+        constructor(model, passengers, colour, speed) {
+          super(model, passengers, colour, speed);
+        }
+        accelerate() {
+          var i = 0;
+          while (i < 10) {
+            i++;
+            super.accelerate();
+            super.accelerate();
+          }
+        }
+      }
+
+      class Porsche extends Car {
+        constructor(model, passengers, colour, speed) {
+          super(model, passengers, colour, speed);
+        }
+      }
+
+      //Create an object based on Ferrari
+      var child2 = new Ferrari(2021, 2, "red", 240);
+      console.log("current speed:", child2.getSpeed());
+      child2.accelerate();
+      console.log("speed after acceleration:", child2.getSpeed());
+
+      //Create an object based on Ferrari
+      var child3 = new Porsche(2000, 2, "purple", 220);
+      console.log("current speed:", child3.getSpeed());
+      child3.accelerate();
+      console.log("speed after acceleration:", child3.getSpeed());
+    </script>
+  </body>
+</html>
