@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>More ES6 Classes</title>
+  </head>
+  <body>
+    <div id="bankAccounts" style="display: flex; margin: 5px"></div>
+    <div
+      style="
+        display: flex;
+        flex: 1;
+        margin: 5px;
+        padding: 5px;
+        border: 1px solid blue;
+      "
+    >
+      <p>Use your chequing account to pay for an item:</p>
+      <input type="text" id="tbChequingAmmount" />
+      <input type="button" value="Pay For Item" onclick="payForItem()" />
+    </div>
+    <div
+      style="
+        display: flex;
+        flex: 1;
+        margin: 5px;
+        padding: 5px;
+        border: 1px solid blue;
+      "
+    >
+      <p>Transfer from savings to chequing:</p>
+      <input type="text" id="tbSavingsAmmount" />
+      <input
+        type="button"
+        value="Transfer From Savings To Chequing"
+        onclick="transferFromSavings()"
+      />
+    </div>
+    <script>
+      //Bank account base class, strict mode automatically
+      class BankAccount {
+        #name;
+        #balance;
+
+        //constructor
+        constructor(name, balance) {
+          this.#name = name;
+          this.#balance = balance;
+        }
+
+        get name() {
+          return this.#name;
+        }
+        set name(new_name) {
+          this.#name = new_name;
+        }
+
+        get balance() {
+          return this.#balance;
+        }
+        set balance(new_balance) {
+          this.#balance = new_balance;
+        }
+
+        static get rootDivID() {
+          return "bankAccounts";
+        }
+
+        myCustomRender() {
+          //1st step is to the the div element we refer as root for our bankAccounts
+          let rootDiv = document.getElementById(BankAccount.rootDivID);
+          //let anotherWayToCallOurRootDiv = document.getElementById("bankAccounts");
+          //console.log(anotherWayToCallOurRootDiv);
+          if (rootDiv) {
+            //build your dynamic html incide rootDiv
+            //I want to display my bank account name and balance
+            let myHtml =
+              "<div style='flex:1; border: 1px solid black; padding: 5px; margin: 5px;'>";
+            myHtml += `<p><b>Name: </b>${this.name}</p>`;
+            myHtml += "<p><b>Balance: </b>" + this.balance + "</p>";
+            myHtml += "</div>";
+            //after we are done building our own custom html, append it to our divRoot
+            rootDiv.innerHTML += myHtml;
+          } else {
+            alert(
+              "Unable to find rootDiv element with ID: " + BankAccount.rootDivID
+            );
+            return;
+          }
+        }
+
+        //TODO: IMPLEMENT A CLEAR rootDiv method.
+        static clearScreen() {
+          let rootDiv = document.getElementById(BankAccount.rootDivID);
+          if (rootDiv) {
+            rootDiv.innerHTML = "";
+          }
+        }
+      }
+
+      //Create a savings account class and a chequing account class
+      class Savings extends BankAccount {
+        constructor(name, balance) {
+          super(name, balance);
+        }
+      }
+
+      class Chequing extends BankAccount {
+        constructor(name, balance) {
+          super(name, balance);
+        }
+      }
+
+      //Now we are ready to create objects based on our classes
+      let mySavings = new Savings("Savings", 500);
+      let myChequing = new Chequing("Chequing", 100);
+
+      //Render my savings account info on the browser
+      //mySavings.render();
+
+      //Render my chequing account info
+      //myChequing.render();
+
+      //This is an arrow function
+      let renderAccountsInfo = () => {
+        mySavings.myCustomRender();
+        myChequing.myCustomRender();
+      };
+      renderAccountsInfo();
+
+      //Pay for items
+      let payForItem = () => {
+        //get the amount
+        let howMuch = document.getElementById("tbChequingAmmount").value;
+        howMuch = parseInt(howMuch);
+        if (isNaN(howMuch)) {
+          alert("Ammount can only be a numeric value!");
+          return;
+        }
+        //check if enough balance
+        if (myChequing.balance < howMuch) {
+          alert("Insuficient funds!");
+          return;
+        }
+        myChequing.balance -= howMuch;
+        //refrech displayed balance on the screen.
+        BankAccount.clearScreen();
+        renderAccountsInfo();
+        //myChequing.render();
+        alert("Payment completed, thank you!");
+      };
+
+      let transferFromSavings = () => {
+        let howMuch = document.getElementById("tbSavingsAmmount").value;
+        howMuch = parseInt(howMuch);
+        if (isNaN(howMuch)) {
+          alert("Ammount can only be a numeric value!");
+          return;
+        }
+        //check if enough balance
+        if (mySavings.balance < howMuch) {
+          alert("Insuficient funds!");
+          return;
+        }
+        mySavings.balance -= howMuch;
+        myChequing.balance += howMuch;
+        //refrech displayed balance on the screen.
+        BankAccount.clearScreen();
+        renderAccountsInfo();
+        //myChequing.render();
+        alert("Transfer completed, thank you!");
+      };
+    </script>
+  </body>
+</html>
