@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exercise 03</title>
+    <style>
+      .container {
+        margin: auto;
+        border: 2px solid blue;
+        padding: 10px;
+        text-align: center;
+      }
+      /* tr {
+        background-color: green;
+      } */
+    </style>
+  </head>
+  <body>
+    <div id="contentDIV" class="container"></div>
+    <script>
+      //Base class
+      class Car {
+        #brand = "unknown";
+        #passengers = 2;
+        #colour = "grey";
+        #maxSpeed = "100";
+        #year = "1995";
+        #imageSrc = ""; //identify an assets folder containing images
+
+        constructor(brand, passengers, colour, maxSpeed, year, imageSource) {
+          this.#brand = brand;
+          this.#passengers = passengers;
+          this.#colour = colour;
+          this.#maxSpeed = maxSpeed;
+          this.#year = year;
+          this.#imageSrc = imageSource;
+        }
+
+        get brand() {
+          return this.#brand;
+        }
+        set brand(newBrand) {
+          this.#brand = newBrand;
+        }
+
+        get passengers() {
+          return this.#passengers;
+        }
+        set passengers(newNumberOfPassengers) {
+          this.#passengers = newNumberOfPassengers;
+        }
+
+        get colour() {
+          return this.#colour;
+        }
+        set colour(newColour) {
+          this.#colour = newColour;
+        }
+
+        get maxSpeed() {
+          return this.#maxSpeed;
+        }
+        set maxSpeed(newMaxSpeed) {
+          this.#maxSpeed = newMaxSpeed;
+        }
+
+        get year() {
+          return this.#year;
+        }
+        set year(newYear) {
+          this.#year = newYear;
+        }
+
+        get imageSource() {
+          return this.#imageSrc;
+        }
+        set imageSource(newImageSrc) {
+          this.#imageSrc = newImageSrc;
+        }
+
+        //Create 2 methods that we can override from subclasses
+        speedUp() {
+          this.#maxSpeed += 10;
+          console.log(
+            "Speeding up from base class, up to... " + this.#maxSpeed
+          );
+        }
+        colourDescription() {
+          console.log(
+            "Printing colour information form base class: " + this.#colour
+          );
+        }
+      }
+
+      class BMW extends Car {
+        constructor(passengers, colour, maxSpeed, year, imageSource) {
+          super("BMW", passengers, colour, maxSpeed, year, imageSource);
+        }
+      }
+
+      class Toyota extends Car {
+        constructor(passengers, colour, maxSpeed, year, imageSource) {
+          super("Toyota", passengers, colour, maxSpeed, year, imageSource);
+        }
+      }
+
+      let availableColours = [
+        "blue",
+        "red",
+        "green",
+        "yellow",
+        "white",
+        "grey",
+      ];
+      let availableImages = [
+        "../assets/images/BMW.jpg",
+        "../assets/images/Car.jpg",
+      ];
+      let objectsArray = [];
+
+      //Option 1 create objects 1 by 1 by using copy/paste
+      //Option 2 for demostration purposes i'll use a for loop.
+      for (var i = 0; i < 5; i++) {
+        //Create a BMW object and add it to global array
+        var tmpBMW = new BMW(
+          i + 1,
+          availableColours[i],
+          90 + i,
+          1995,
+          availableImages[0]
+        );
+        objectsArray.push(tmpBMW);
+        //Create a Toyota object and add it to global array.
+        var tmpToyota = new Toyota(
+          i + 2,
+          availableColours[i],
+          85 + i,
+          2000 + i,
+          availableImages[1]
+        );
+        objectsArray.push(tmpToyota);
+      }
+
+      //console.log(objectsArray);
+
+      //Global variable representing car being rendered
+      let currentIndex = 0;
+
+      function previous() {
+        //Decrease currentIndex
+        currentIndex--;
+        if (currentIndex < 0) {
+          //tell the user this is the first element
+          currentIndex = 0;
+          alert("this is the first element/car in the array!");
+        }
+        renderSelectedIndex();
+      }
+
+      function next() {
+        currentIndex++;
+        //validate
+        if (currentIndex >= objectsArray.length) {
+          currentIndex--;
+          alert("this is the laste element/car in the array!");
+        }
+        renderSelectedIndex();
+      }
+
+      function renderSelectedIndex() {
+        var mainDiv = document.getElementById("contentDIV");
+        var myHTML = "<h3>Current index: " + currentIndex + "</h3>";
+        myHTML += "<table>";
+        myHTML += "<tr>";
+        myHTML += "<td>";
+        //Add previous button
+        myHTML +=
+          "<input type='button' value='Previous' onclick='previous()'/>";
+        myHTML += "</td>";
+        myHTML += "<td>";
+        myHTML += "<input type='button' value='Next' onclick='next()'/>";
+        myHTML += "</td>";
+        myHTML += "</tr>";
+
+        myHTML += "<tr>";
+        myHTML += "<td>Brand:</td>";
+        myHTML += "<td>";
+        myHTML += objectsArray[currentIndex].brand;
+        myHTML += "</td>";
+        myHTML += "</tr>";
+
+        myHTML += "<tr>";
+        myHTML += "<td>Passengers:</td>";
+        myHTML += "<td>";
+        myHTML += objectsArray[currentIndex].passengers;
+        myHTML += "</td>";
+        myHTML += "</tr>";
+
+        myHTML += "<tr>";
+        myHTML += "<td>Color:</td>";
+        myHTML += "<td>";
+        myHTML += objectsArray[currentIndex].colour;
+        myHTML += "</td>";
+        myHTML += "</tr>";
+
+        myHTML += "<tr>";
+        myHTML += "<td>Max Speed:</td>";
+        myHTML += "<td>";
+        myHTML += objectsArray[currentIndex].maxSpeed;
+        myHTML += "</td>";
+        myHTML += "</tr>";
+
+        myHTML += "<tr>";
+        myHTML += "<td>Year:</td>";
+        myHTML += "<td>";
+        myHTML += objectsArray[currentIndex].year;
+        myHTML += "</td>";
+        myHTML += "</tr>";
+
+        //Add image
+        myHTML += "<tr>";
+        myHTML += "<td colspan=2>Photo:";
+        myHTML += "</td>";
+        myHTML += "</tr>";
+
+        myHTML += "<tr>";
+        myHTML += "<td colspan=2>";
+        //insert image here
+        myHTML +=
+          "<img src='" +
+          objectsArray[currentIndex].imageSource +
+          "' width=500px; height=500px; />";
+        myHTML += "</td>";
+        myHTML += "</tr>";
+
+        myHTML += "</table>";
+
+        //render myHTML on the screen
+        mainDiv.innerHTML = myHTML;
+      }
+
+      //   #brand = "unknown";
+      //     #passengers = 2;
+      //     #colour = "grey";
+      //     #maxSpeed = "100";
+      //     #year = "1995";
+      //     #imageSrc = ""; //identify an assets folder containing images
+
+      //call the actual render function which will be called the first time the page loads
+      renderSelectedIndex();
+    </script>
+  </body>
+</html>

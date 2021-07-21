@@ -2,5 +2,5 @@
 *.zip
 
 images/
-
+assets/
 secret.js
