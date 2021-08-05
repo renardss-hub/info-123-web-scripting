@@ -46,9 +46,20 @@
         <input type="radio" name="rdStatus" value="0" />OFF
         <br />
         <input type="button" value="Update" onclick="updateObject()" />
+        <br />
+        <input type="button" value="HelloWorld" onclick="fnHelloWorld()" />
+        <br />
+        <div id="divHelloWorld"></div>
       </div>
     </div>
     <script>
+      let fnHelloWorld = () => {
+        //grab my html control
+        var divHelloWorld = document.getElementById("divHelloWorld");
+        divHelloWorld.innerHTML = "<h2>Hello world!</h2>";
+        currentIndex++;
+        renderSelected();
+      };
       //let create a class for demostration purposes
       class LightBulb {
         //constructor
@@ -123,7 +134,7 @@
       //Create an object based on LightBulb class
       let lb1 = new LightBulb("LG", "LED", 1);
       //Create a second object and pass empty strings
-      let lb2 = new LightBulb("", "", 0);
+      let lb2 = new LightBulb("Generic", "Standard", 0);
 
       //we might have multiple bulbs, so let's create an array to store them
       let bulbsArray = [];
